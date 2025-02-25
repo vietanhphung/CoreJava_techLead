@@ -6,7 +6,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import main.java.com.bangchamcong.demo.DailyIncomePerPerson;
+import com.bangchamcong.demo.DailyIncomePerPerson;
 
 import java.io.File;
 import java.io.FileInputStream;
