@@ -22,9 +22,6 @@ public class B12{
                 this.inventory = inventory;
             }
             
-
-
-
             public List<Map<String, Object>> sortByName() {
                 return inventory.stream()
                 .sorted(Comparator.comparing(a -> (String) a.get("name")))
