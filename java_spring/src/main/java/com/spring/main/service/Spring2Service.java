@@ -1,8 +1,12 @@
 
 package com.spring.main.service;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -13,23 +17,23 @@ import java.util.List;
 public class Spring2Service {
 
     //18
-    public static int count(Set<Integer> s){
+    public  int count(Set<Integer> s){
         return s.size();
     }
     
     //16
-    public static void list(Set<Integer> a){
+    public  String list(Set<Integer> a){
         List<Integer> list = new ArrayList<>();
         for( int i : a){
             list.add(i);
         }
         list.sort(null);
-        System.out.println(list.get(0) + " and " + list.get(list.size() -1));
+        return (list.get(0) + " and " + list.get(list.size() -1)).toString();
     }
 
 
     //15
-        public static void overLap(Set<Integer> a, Set<Integer> b){
+        public  Set<Integer> overLap(Set<Integer> a, Set<Integer> b){
         Set<Integer> set = new HashSet<>();
         for( int i : a){
             set.add(i);
@@ -37,23 +41,23 @@ public class Spring2Service {
         for(int i : b){
             set.add(i);
         }
-        System.out.println(set);
+        return (set);
     }
 
     //14
-    public static void overLap2(Set<Integer> a, Set<Integer> b){
+    public  List<Integer> overLap2(Set<Integer> a, Set<Integer> b){
         List<Integer> overLap = new ArrayList<>();
         for( int i : a){
             if(b.contains(i)){
                 overLap.add(i);
             }
         }
-        System.out.println(overLap);
+        return (overLap);
     }
 
 
     //13
-    public static void duplicate( List<Integer> list){
+    public  List<Integer> duplicate( List<Integer> list){
         List<Integer> l = new ArrayList<Integer>();
         Set<Integer> set = new HashSet<Integer>();
 
@@ -65,11 +69,35 @@ public class Spring2Service {
                 set.add(i);
             }
         }
-        System.out.println(l);
+        return (l);
     }
 
-    //11
+    //12 -11 separate files
+    //10
+    public  Map<String, Integer> gradeDistribution(Map<String, Double> grades) {
+        Map<String, Integer> output = new HashMap<String, Integer>();
+        int high = 0;
+        int faill = 0;
+        int pass = 0;
+
+        for (Map.Entry<String, Double> entry : grades.entrySet()) {
+            if (entry.getValue() >= 8.0) {
+                high++;
+            } else if (entry.getValue() >= 5.0 && entry.getValue() < 8.0) {
+                pass++;
+            } else {
+                faill++;
+            }
+        }
+        output.put("pass with high score", high);
+        output.put("pass", pass);
+        output.put("faill", faill);
+        return output;
+    }
+
     
+    
+
 
 
 
