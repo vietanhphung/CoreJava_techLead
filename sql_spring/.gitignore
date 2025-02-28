@@ -31,3 +31,27 @@ build/
 
 ### VS Code ###
 .vscode/
+# Ignore .DS_Store files (macOS)
+.DS_Store
+
+# Node.js
+node_modules/
+
+# Python
+*.pyc
+__pycache__/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
