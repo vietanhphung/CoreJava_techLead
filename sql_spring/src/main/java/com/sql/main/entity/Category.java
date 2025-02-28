@@ -2,6 +2,7 @@ package com.sql.main.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
@@ -17,6 +18,9 @@ public class Category {
 
     @Column(name = "last_update", nullable = false, updatable = false)
     private LocalDateTime lastUpdate;
+
+    @OneToMany(mappedBy = "category")
+    private Set<FilmCategory> filmCategories;
 
     // Getters and setters
     public Long getCategoryId() {

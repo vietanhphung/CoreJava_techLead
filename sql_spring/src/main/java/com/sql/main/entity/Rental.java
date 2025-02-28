@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+
 
 
 @Entity
@@ -31,6 +33,11 @@ public class Rental {
     @UpdateTimestamp
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
+
+    @OneToMany(mappedBy = "rental")
+    private Set<Payment> payments;
+
+
 
     // Getters and Setters
 }

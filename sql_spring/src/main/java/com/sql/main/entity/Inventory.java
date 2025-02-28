@@ -26,5 +26,8 @@ public class Inventory {
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
+
+    @OneToMany(mappedBy = "inventory")
+    private List<Rental> rentals;
     // Getters and Setters
 }

@@ -1,45 +1,36 @@
 package com.sql.main.entity;
-
 import jakarta.persistence.*;
-import org.hibernate.annotations.UpdateTimestamp;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-
 
 @Entity
-@Table(name = "payment")
+@Table(name = "payment", schema = "sakila")
 public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
-    private Long id;
-
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "address2")
-    private String address2;
-
-    @Column(name = "district")
-    private String district;
-
-    @Column(name = "city_id")
-    private long city_id;
-
+    private Short paymentId;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @ManyToOne
+    @JoinColumn(name = "staff_id", nullable = false)
+    private Staff staff;
+
+    @ManyToOne
+    @JoinColumn(name = "rental_id")
+    private Rental rental;
+
     @Column(name = "amount", nullable = false)
-    private Double amount;
+    private BigDecimal amount;
 
     @Column(name = "payment_date", nullable = false)
     private LocalDateTime paymentDate;
 
-    @UpdateTimestamp
-    @Column(name = "last_update")
+    @Column(name = "last_update", insertable = false, updatable = false)
     private LocalDateTime lastUpdate;
 
-    // Getters and Setters
 }

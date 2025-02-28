@@ -8,19 +8,18 @@ import java.time.LocalDateTime;
 public class FilmCategory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
+
     @ManyToOne
-    @MapsId("filmId")
-    @JoinColumn(name = "film_id", referencedColumnName = "film_id", insertable = false, updatable = false)
+    @JoinColumn(name = "film_id")
     private Film film;
 
     @ManyToOne
-    @MapsId("categoryId")
-    @JoinColumn(name = "category_id", referencedColumnName = "category_id", insertable = false, updatable = false)
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(name = "last_update", nullable = false, updatable = false)
+    @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 
 
