@@ -9,6 +9,8 @@ import jakarta.persistence.ManyToOne;
 import java.util.Set;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.NoResultException;
 
 
@@ -26,7 +28,8 @@ public class Role {
     private Long roleId;
 
     @Column(name = "name",  nullable = false, unique = true)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private UserRoleEnum name;
 
     @OneToMany(mappedBy = "role")
     private Set<User> users;
@@ -35,7 +38,7 @@ public class Role {
     public Role() {
     }
 
-    public Role(String name) {
+    public Role(UserRoleEnum name) {
         this.name = name;
     }
 
@@ -48,11 +51,11 @@ public class Role {
         this.roleId = id;
     }
 
-    public String getName() {
+    public UserRoleEnum getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(UserRoleEnum name) {
         this.name = name;
     }
 

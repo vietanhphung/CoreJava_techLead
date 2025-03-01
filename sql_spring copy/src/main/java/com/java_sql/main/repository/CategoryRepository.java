@@ -1,15 +1,13 @@
 package com.java_sql.main.repository;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.java_sql.main.entity.*;
-
+import com.java_sql.main.entity.Category;
 import java.util.List;
 
 @Repository
-public interface CategoryRepository  extends JpaRepository<Category, Long>{
-
+public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query(value = """
         SELECT c.name AS category, 
                AVG(DATEDIFF(r.return_date, r.rental_date)) AS avg_rental_duration_of_category
@@ -21,9 +19,5 @@ public interface CategoryRepository  extends JpaRepository<Category, Long>{
         WHERE r.return_date IS NOT NULL
         GROUP BY c.category_id;
     """, nativeQuery = true)
-    List<Object> findAvgRentalDurationPerCategory();
-
-    
+    List<Object[]> findAvgRentalDurationPerCategory();
 }
-
-    

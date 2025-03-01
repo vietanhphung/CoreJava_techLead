@@ -42,7 +42,7 @@ public class ActorService {
         return actorRepository.findActorsOnlyInRRatedMovies();
     }
 
-    public List<Object> getAvgRentalDuration() {
+    public List<Object[]> getAvgRentalDuration() {
         return actorRepository.getAvgRentalDuration();
     }
 

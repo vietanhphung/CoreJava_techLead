@@ -1,5 +1,6 @@
 package com.java_sql.main.controller.controller_java;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import com.java_sql.main.service.service_spring.Spring2Service;
 
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 
 
 
@@ -58,11 +60,10 @@ public class Spring2Controller {
         return spring2Service.duplicate(l);
     }
 
-    @GetMapping("/10")
-    public Map<String, Integer> gradeDistribution( @RequestParam Map<String, Double> m){
-         return spring2Service.gradeDistribution(m);
-    }
 
+
+
+    
 
     /*
     http://localhost:8080/spring2/b18?s=1&s=2&s=3&s=4
@@ -84,9 +85,9 @@ public class Spring2Controller {
     B9
      http://localhost:8080/spring2/b9/upload
 
-    B11
+    B11 // Dictionary
      http://localhost:8080/spring2/b11/add?a=python&b=A powerful programming language.
-     http://localhost:8080/spring2/b11/get?param=java
+     http://localhost:8080/spring2/b11/get?param=python
      http://localhost:8080/spring2/b11/get?param=unknown
 
 

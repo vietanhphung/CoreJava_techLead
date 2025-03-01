@@ -11,8 +11,11 @@ import java.util.List;
 @Repository
 public interface ActorRepository  extends JpaRepository<Actor, Long> {
 
-    @Query("SELECT a.firstName, a.lastName FROM Actor a")
-    List<Object> findAllActorsNames();
+    @Query(value = "SELECT first_name, last_name FROM actor", nativeQuery = true)
+List<Object> findAllActorsNames();
+
+
+
 
     @Query(value = """
         SELECT a.first_name, a.last_name, COUNT(fa.film_id) AS film_count
@@ -74,7 +77,7 @@ public interface ActorRepository  extends JpaRepository<Actor, Long> {
        "JOIN i.rentals r " +
        "WHERE r.returnDate IS NOT NULL " +
        "GROUP BY a.actorId, c.categoryId")
-    List<Object> getAvgRentalDuration();
+    List<Object[]> getAvgRentalDuration();
 
 
     @Query("SELECT DISTINCT (a.firstName, a.lastName) " +

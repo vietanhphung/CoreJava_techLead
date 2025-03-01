@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.java_sql.main.repository.ActorRepository;
+import com.java_sql.main.dto.*;
+
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/actor")
@@ -15,47 +18,108 @@ public class ActorController {
     private ActorRepository actorRepository;
 
     @GetMapping("/1.1")
-    public List<Object> getAllActors() {
-        return actorRepository.findAllActorsNames();
+    public List<FindAllActorsNamesDTO> getAllActors() {
+        return actorRepository.findAllActorsNames()
+                .stream()
+                .map(obj -> {
+                    Object[] row = (Object[]) obj;
+                    return new FindAllActorsNamesDTO(
+                        row[0].toString(),  // First Name
+                        row[1].toString()   // Last Name
+                    );
+                })
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/1.7")
-    public List<Object> getActorsWithMoreThan20Films() {
-        return actorRepository.findActorsWithMoreThan20Films();
+    public List<ActorWithFilmCountDTO> getActorsWithMoreThan20Films() {
+        return actorRepository.findActorsWithMoreThan20Films()
+                .stream()
+                .map(obj -> {
+                    Object[] row = (Object[]) obj;
+                    return new ActorWithFilmCountDTO(
+                        row[0].toString(),  // First Name
+                        row[1].toString(),  // Last Name
+                        ((Number) row[2]).intValue() // Film Count
+                    );
+                })
+                .collect(Collectors.toList());
     }
 
-    @GetMapping("/2.4")
-    public List<Object> getActorsInEveryCategory() {
-        return actorRepository.findActorsInEveryCategory();
-    }
+
 
     @GetMapping("/2.6")
-    public List<Object> getRevenueByActor() {
-        return actorRepository.findRevenueByActor();
+    public List<ActorRevenueDTO> getRevenueByActor() {
+        return actorRepository.findRevenueByActor()
+                .stream()
+                .map(obj -> {
+                    Object[] row = (Object[]) obj;
+                    return new ActorRevenueDTO(
+                        row[0].toString(),  // First Name
+                        row[1].toString(),  // Last Name
+                        ((Number) row[2]).intValue() // Film Count
+                    );
+                })
+                .collect(Collectors.toList());
     }
+
 
     @GetMapping("/2.7")
-    public List<Object> getActorsOnlyInRRatedMovies() {
-        return actorRepository.findActorsOnlyInRRatedMovies();
+    public List<ActorInRMoviesDTO> getActorsOnlyInRRatedMovies() {
+        return actorRepository.findActorsOnlyInRRatedMovies()
+        .stream()
+                .map(obj -> {
+                    Object[] row = (Object[]) obj;
+                    return new ActorInRMoviesDTO(
+                        row[0].toString(),  // First Name
+                        row[1].toString()  // Last Name
+                    );
+                })
+                .collect(Collectors.toList());
     }
-
+    
     @GetMapping("/3.1")
-    public List<Object> getAvgRentalDuration() {
-        return actorRepository.getAvgRentalDuration();
+    public List<ActorAvgRentalDurationDTO> getAvgRentalDuration() {
+        return actorRepository.getAvgRentalDuration()
+                .stream()
+                .map(row -> new ActorAvgRentalDurationDTO(
+                        row[1].toString(),  // First Name
+                        row[2].toString(),  // Last Name
+                        row[3].toString(),  // Category Name
+                        ((Number) row[4]).doubleValue() // Avg Rental Duration
+                ))
+                .collect(Collectors.toList());
     }
+    
+    
 
     @GetMapping("/3.2")
-    public List<Object> getActorsInRFilmsNotG() {
-        return actorRepository.getActorsInRFilmsNotG();
+    public List<FindAllActorsNamesDTO> getActorsInRFilmsNotG() {
+        return actorRepository.getActorsInRFilmsNotG()
+                .stream()
+                .map(obj -> {
+                    Object[] row = (Object[]) obj;
+                    return new FindAllActorsNamesDTO(
+                        row[0].toString(),  // First Name
+                        row[1].toString()   // Last Name
+                    );
+                })
+                .collect(Collectors.toList());
     }
-/* 
-    @GetMapping("/3.6")
-    public List<Object> getActorsWhoAppearedWithAll() {
-        return actorRepository.getActorsWhoAppearedWithAll();
-    }
-*/
+    
+
     @GetMapping("/3.10")
-    public List<Object> getActorsInSpecificFilms() {
-        return actorRepository.getActorsInSpecificFilms();
+    public List<FindAllActorsNamesDTO> getActorsInSpecificFilms() {
+        return actorRepository.getActorsInSpecificFilms()
+        .stream()
+        .map(obj -> {
+            Object[] row = (Object[]) obj;
+            return new FindAllActorsNamesDTO(
+                row[0].toString(),  // First Name
+                row[1].toString()   // Last Name
+            );
+        })
+        .collect(Collectors.toList());
+
     }
 }

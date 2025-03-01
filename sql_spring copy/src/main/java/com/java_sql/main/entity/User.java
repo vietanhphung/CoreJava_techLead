@@ -1,44 +1,42 @@
 package com.java_sql.main.entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-
+import jakarta.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = " username")
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name="password")
-    private String password; // posibility for encryption
+    @Column(name="password", nullable = false)
+    private String password; // Possibility for encryption
 
-    @Column(name="email")
+    @Column(name="email", nullable = false, unique = true)
     private String email;
 
     @ManyToOne
-    @JoinColumn (name="role_id")
+    @JoinColumn(name="role_id", nullable = false)
     private Role role;
-
 
     // Constructors
     public User() {}
 
-    public User(String username, String password, String email) {
+    public User(String username, String password, String email, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;  
     }
 
     // Getters and Setters
@@ -80,5 +78,37 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+
+
+        @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (role == null) {
+            System.out.println("DEBUG: Role is NULL for user: " + username);
+            return Collections.emptyList();
+        }
+        System.out.println("DEBUG: User Role -> " + role.getName()); // Debug log
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
