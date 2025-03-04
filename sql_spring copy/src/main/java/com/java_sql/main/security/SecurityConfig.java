@@ -2,6 +2,7 @@ package com.java_sql.main.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,7 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.List;
 
@@ -56,7 +59,11 @@ public class SecurityConfig {
                 .requestMatchers("/debug/**").permitAll()  // TEMPORARY DEBUG ENDPOINT
                 .requestMatchers("/spring1/**", "/spring2/**", "/spring3/**", "/spring4/**").hasRole("USER")
                 .requestMatchers( "/auth/register","/actor/**", "/categories/**", "/updateQuery/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
+            )
+             .exceptionHandling(ex -> ex
+                .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.NOT_FOUND), 
+                    new AntPathRequestMatcher("/**")) // Return 404 for all unmatched URLs
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .logout(LogoutConfigurer::permitAll)
